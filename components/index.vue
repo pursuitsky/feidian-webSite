@@ -26,11 +26,11 @@
             <div class="person-message">
                 <h4>成员档案</h4>
                 <div class="person-message-content">
-                    <div v-for="data in datas" :key="data.id">
+                    <div v-for="data in pageData" :key="data.id">
                         <Card :data="data"></Card>
                     </div>
                 </div>
-                
+                <Page :page-title="pageNumber" :current="current" @handleCurrent="changeCurrent"></Page>
             </div>
         </div>
     </div>
@@ -38,6 +38,7 @@
 
 <script>
 import Card from './common/card.vue'
+import Page from './common/page.vue'
 export default {
     data(){
         return{
@@ -47,23 +48,46 @@ export default {
                 '安卓',
                 'ios',
                 '信息安全'
-            ]
+            ],
+            searchCode:'',
+            current:1,
+            // filterArr:[]
         }
     },
     components:{
-        Card
+        Card,
+        Page
     },
     computed :{
+        filterData:function(){
+            let arr = [...this.datas];
+            if(this.searchCode != ''){
+                arr = arr.filter((item) => item.group === this.searchCode);
+            }
+            return arr;
+        },
+        pageNumber:function(){
+            let arr = [...this.filterData];
+            return Math.ceil(arr.length/3);
+        },
         height:function(){
             return window.innerHeight+'px';
         },
         datas:function() {
             return this.$store.state.allMessage;
+        },
+        pageData:function(){
+            let arr = [...this.filterData];
+            let pageArr = arr.slice((this.current-1)*3,this.current*3);
+            return pageArr; 
         }
     },
     methods:{
         handleFilterByKey(keyCode){
-            this.$store.dispatch('filterByKey',keyCode);
+             this.searchCode = keyCode;
+        },
+        changeCurrent(val){
+            this.current = val;
         } 
     },
     mounted(){

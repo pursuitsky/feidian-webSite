@@ -40,30 +40,19 @@ const store = new Vuex.Store({
         setAllMess (state,arr){
             state.allMessage = arr;
         },
-        setBykey (state,arr){
-            state.allMessage = arr;
-        }
+        
     },
     actions:{
         getAllMessage (context){
             $.ajax.post('/all').then((res) => {
                 if(res.status === 200)
                     context.commit('setAllMess',res.data.result);
-                    //console.log(res);
+                    console.log(res);
             })
             .catch((error) => {
                 console.log(error);
             })
         },
-        filterByKey(context,key){
-            $.ajax.get('?keyWord='+key).then((res) => {
-                if(res.status === 200)
-                    context.commit('setBykey',res.data.result);
-            })
-            .then((error) => {
-                console.log(error);
-            })
-        }
     }
 });
 

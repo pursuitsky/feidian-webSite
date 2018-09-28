@@ -1,0 +1,131 @@
+<template>
+    <div class="pager">
+        <button class="btn btn-pager" :disabled="this.current === 1" @click="prePage">上一页</button>
+        <span v-if="pageTitle !== 1" class="page-index num" :class="{active:current===1}" @click="goToPage(1)">1</span>
+        <span v-if="preClipped" class="page-index">...</span>
+        <span 
+            v-for="index in pages" 
+            class="page-index num" 
+            :key='index' 
+            :class="{active:current===index}"
+            @click="goToPage(index)"
+            >{{index}}</span>
+        <span v-if="backClipped" class="page-index">...</span>
+        <span class="page-index num" :class="{active:pageTitle === current}" @click="goToPage(pageTitle)">{{pageTitle}}</span>
+        <button class="btn btn-pager" :disabled="this.current === pageTitle" @click="nextPage">下一页</button>
+    </div>
+</template>
+
+<script>
+export default {
+    props:{
+        current:{
+            type:Number,
+            default:1
+        },
+        pageTitle:{
+            type:Number,
+            default:1
+        }
+    },
+    data(){
+        return{
+            preClipped:false,
+            backClipped:true,
+            one:false
+        }
+    },
+    methods:{
+        prePage(){
+            this.current--;
+        },
+        nextPage(){
+            this.current++;
+        },
+        goToPage(index){
+            this.current = index;
+        },
+
+    },
+    computed:{
+        pages:function(){
+            let arr = [];
+            //添加前面显示的页码
+            if(this.current>3){
+                arr.push(this.current-2);
+                arr.push(this.current-1);
+                if(this.current>4){
+                    this.preClipped = true
+                }
+            }else{
+                this.preClipped = false;
+                for(let i = 2;i<this.current;i++){
+                    arr.push(i);
+                }
+            }  
+            //将当前的页码添加到显示数组中
+            if(this.current!==this.pageTitle && this.current!==1){
+                arr.push(this.current);
+            }
+            //添加后面显示的页码
+            if(this.current<(this.pageTitle-2)){
+                arr.push(this.current+1);
+                arr.push(this.current+2);
+                if(this.current<=(this.pageTitle-3)){
+                    this.backClipped = true;
+                }
+            }else{
+                this.backClipped = false;
+                for(let i =this.current+1 ;i<this.pageTitle;i++){
+                    arr.push(i);
+                }
+            }
+            return arr;
+        }
+    },
+    watch:{
+        current(val){
+            this.$emit('handleCurrent',val);
+        }
+    }
+}
+</script>
+
+<style scoped>
+    .pager{
+        text-align: center;
+    }
+    .btn-pager{
+        margin-left: 10px;
+        width: 60px;
+        height: 30px;
+        text-align: center;
+        background: #ffffff;
+        color: #504f4f;
+        border: 1px solid #e3e3e3;
+        border-radius: 4px;
+        transition: all .5s ease;
+        outline:none;
+    }
+    .btn-pager:hover,.num:hover{
+        color: #ffffff;
+        background: #3399ff;
+    }
+    .page-index{
+        display: inline-block;
+        margin-left: 10px;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        background: #ffffff;
+        cursor: pointer;
+        color: #3a3a3a;
+        border-radius: 4px;
+        transition: all .5s ease;
+    }
+    .active{
+        color: #ffffff;
+        background: #3399ff;
+        border-radius: 4px;
+    }
+</style>
