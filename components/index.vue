@@ -30,7 +30,7 @@
                         <Card :data="data"></Card>
                     </div>
                 </div>
-                <Page :page-title="pageNumber" :current="current" @handleCurrent="changeCurrent"></Page>
+                <Page :total-data="filterData" :current="current" @handleCurrent="changeCurrent"></Page>
             </div>
         </div>
     </div>
@@ -51,7 +51,6 @@ export default {
             ],
             searchCode:'',
             current:1,
-            // filterArr:[]
         }
     },
     components:{
@@ -65,10 +64,6 @@ export default {
                 arr = arr.filter((item) => item.group === this.searchCode);
             }
             return arr;
-        },
-        pageNumber:function(){
-            let arr = [...this.filterData];
-            return Math.ceil(arr.length/3);
         },
         height:function(){
             return window.innerHeight+'px';
@@ -89,6 +84,11 @@ export default {
         changeCurrent(val){
             this.current = val;
         } 
+    },
+    watch:{
+        searchCode(){
+            this.current = 1;
+        }
     },
     mounted(){
         this.$store.dispatch('getAllMessage');

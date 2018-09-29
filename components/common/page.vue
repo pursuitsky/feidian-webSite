@@ -1,15 +1,20 @@
 <template>
     <div class="pager">
         <button class="btn btn-pager" :disabled="this.current === 1" @click="prePage">上一页</button>
-        <span v-if="pageTitle !== 1" class="page-index num" :class="{active:current===1}" @click="goToPage(1)">1</span>
+        <span 
+            v-if="pageTitle !== 1" 
+            class="page-index num" 
+            :class="{active:current===1}" 
+            @click="goToPage(1)"
+        >1</span>
         <span v-if="preClipped" class="page-index">...</span>
         <span 
             v-for="index in pages" 
-            class="page-index num" 
-            :key='index' 
+            :key='index'
+            class="page-index num"  
             :class="{active:current===index}"
             @click="goToPage(index)"
-            >{{index}}</span>
+        >{{index}}</span>
         <span v-if="backClipped" class="page-index">...</span>
         <span class="page-index num" :class="{active:pageTitle === current}" @click="goToPage(pageTitle)">{{pageTitle}}</span>
         <button class="btn btn-pager" :disabled="this.current === pageTitle" @click="nextPage">下一页</button>
@@ -19,20 +24,19 @@
 <script>
 export default {
     props:{
+        totalData:{
+            type:Array
+        },
         current:{
             type:Number,
             default:1
         },
-        pageTitle:{
-            type:Number,
-            default:1
-        }
     },
     data(){
         return{
             preClipped:false,
             backClipped:true,
-            one:false
+            current:1
         }
     },
     methods:{
@@ -48,7 +52,11 @@ export default {
 
     },
     computed:{
-        pages:function(){
+        pageTitle:function(){//计算页数，由父组件传来的数据计算
+            let arr = [...this.totalData];
+            return Math.ceil(arr.length/3);
+        },
+        pages:function(){//计算那一页显示
             let arr = [];
             //添加前面显示的页码
             if(this.current>3){
