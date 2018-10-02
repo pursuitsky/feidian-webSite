@@ -27,11 +27,15 @@
             <span>还没有沸点账号？</span>
             <router-link to="/register" >立即注册</router-link>
         </div>
+        <Alert :closed="tip.closed" :type="tip.type">
+            <span>{{tip.message}}</span>
+        </Alert>
     </div>
 </template>
 
 <script>
 import $ from '../libs/util.js'
+import Alert from './common/alert.vue'
 export default {
     data () {
         return {
@@ -40,7 +44,16 @@ export default {
             errorEmail:false,
             errorPassWord:false,
             checked:false,
+            tip:{
+                type:'success',
+                closed:true,
+                message:'',
+                timer:null
+            }
         }
+    },
+    components:{
+        Alert
     },
     computed:{
         form:function() {
@@ -62,14 +75,16 @@ export default {
                     if(res.status === 200 && res.data.status === 1){
                         this.$router.push('/index');
                     }else{
-                        alert(res.data.error);
+                        //alert(res.data.error);
+                        this.setTip(res.data.error,'error');
+                        this.clearTimer();
                     }
                 })
                 .catch((error) => {
                     console.log(error);
                 })
             }
-            
+            console.log(this.tip);
         },
         setChecked() {
             this.checked = document.cookie.length > 0
@@ -97,6 +112,18 @@ export default {
         },
         clearCookie: function() {
             this.setCookie("", "", -1); //修改2值都为空，天数为负1天就好了
+        },
+        setTip(message,type){
+            this.tip.message = message;
+            this.tip.type = type;
+            this.tip.closed = false;
+            this.tip.timer = setTimeout(() => {
+                 this.tip.closed = true;
+            },4000);
+        },
+        clearTimer() {
+            if(this.tip.timer !==null)
+                this.tip.timer = null;
         }
     },
     watch:{

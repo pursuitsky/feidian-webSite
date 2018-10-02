@@ -1,6 +1,7 @@
 <template>
     <div class="pager">
-        <button class="btn btn-pager" :disabled="this.current === 1" @click="prePage">上一页</button>
+        <span>共{{totalData.length}}条数据</span>
+        <button class="btn btn-pager" :disabled="this.current === 1" :class="{disable:current ===1}" @click="prePage">上一页</button>
         <span 
             v-if="pageTitle !== 1" 
             class="page-index num" 
@@ -17,7 +18,13 @@
         >{{index}}</span>
         <span v-if="backClipped" class="page-index">...</span>
         <span class="page-index num" :class="{active:pageTitle === current}" @click="goToPage(pageTitle)">{{pageTitle}}</span>
-        <button class="btn btn-pager" :disabled="this.current === pageTitle" @click="nextPage">下一页</button>
+        <button 
+            class="btn btn-pager"
+            :class="{disable:current === pageTitle}" 
+            :disabled="this.current === pageTitle" 
+            @click="nextPage"
+            
+            >下一页</button>
     </div>
 </template>
 
@@ -113,6 +120,7 @@ export default {
         border: 1px solid #e3e3e3;
         border-radius: 4px;
         transition: all .5s ease;
+        cursor: pointer;
         outline:none;
     }
     .btn-pager:hover,.num:hover{
@@ -135,5 +143,9 @@ export default {
         color: #ffffff;
         background: #3399ff;
         border-radius: 4px;
+    }
+    .disable{
+        cursor: wait;
+        color: #c5c8ce;
     }
 </style>
