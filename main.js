@@ -31,7 +31,8 @@ router.afterEach((to,from,next) => {
 //状态管理配置
 const store = new Vuex.Store({
     state:{
-        allMessage:[]
+        allMessage:[],
+        LoginMess:JSON.parse(window.localStorage.getItem('form'))
     },
     getters:{
        
@@ -40,19 +41,21 @@ const store = new Vuex.Store({
         setAllMess (state,arr){
             state.allMessage = arr;
         },
-        
+        // setLoginMess (state,obj){
+        //     state.LoginMess = JSON.parse(window.localStorage.getItem('form'));
+        // }
     },
     actions:{
         getAllMessage (context){
             $.ajax.post('/all').then((res) => {
                 if(res.status === 200)
                     context.commit('setAllMess',res.data.result);
-                    console.log(res);
+                    //console.log(res);
             })
             .catch((error) => {
                 console.log(error);
             })
-        },
+        }
     }
 });
 

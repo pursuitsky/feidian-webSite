@@ -73,7 +73,8 @@ export default {
                 this.errorPassWord = false;
                 $.ajax.post('/login',this.$qs.stringify(this.form)).then((res) => {
                     if(res.status === 200 && res.data.status === 1){
-                        this.$router.push('/index');
+                        window.localStorage.setItem('form',JSON.stringify(this.form));
+                        this.$router.push({path:'/index',query:{email:this.email}});
                     }else{
                         //alert(res.data.error);
                         this.setTip(res.data.error,'error');
@@ -84,7 +85,7 @@ export default {
                     console.log(error);
                 })
             }
-            console.log(this.tip);
+            //console.log(this.tip);
         },
         setChecked() {
             this.checked = document.cookie.length > 0

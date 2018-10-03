@@ -4,8 +4,9 @@
             <img src="../images/logo.png"/>
             <h2>Welcome to Feidian</h2>
             <p>哥大法官的非官方的还让他让他一人同意让他一人同哥大法官的非官方的还让他让他一人同意让他一人同哥大法官的非官方的还让他让他一人同意让他一人同哥大法官的非官方的还让他让他一人同意让他一人同</p>
-            <a href="#">个人中心</a>
+            <a @click="personalCenter">个人中心</a>
             <p>沸点账号中心</p>
+            <!-- {{LoginMessa}} -->
         </div>
         <div class="index-content">
             <div class="search">
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+// import $ from '../libs/util.js'
 import Card from './common/card.vue'
 import Page from './common/page.vue'
 export default {
@@ -75,6 +77,10 @@ export default {
             let arr = [...this.filterData];
             let pageArr = arr.slice((this.current-1)*3,this.current*3);
             return pageArr; 
+        },
+        LoginMessage:function(){
+           return this.$store.state.LoginMess;
+            // return $.filterData(this.datas,mess);
         }
     },
     methods:{
@@ -83,6 +89,11 @@ export default {
         },
         changeCurrent(val){
             this.current = val;
+        },
+        personalCenter(){
+            alert('去个人中心');
+            //console.log(this.LoginMessage);
+            //this.$router.push('/person/'+this.LoginMessage.email);
         } 
     },
     watch:{

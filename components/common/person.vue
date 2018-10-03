@@ -5,7 +5,7 @@
                 <img src="../../images/qq.png"/>
                 <p>{{message.name}}</p>
                 <p>{{message.email}}</p>
-                <span @click="handleChange">修改资料</span>
+                <span @click="handleChange" v-if="message.email === Login.email">修改资料</span>
             </div>
             <div class="all-info">
                 <h1>{{message.group}}</h1>
@@ -48,14 +48,17 @@ export default {
         Alert
     },
     computed:{
-        
+        Login:function(){
+            return this.$store.state.LoginMess;
+            
+        }
     },
     methods:{
         getMessage() {
             $.ajax.get('/byname?name='+this.name).then((res) => {
                 if(res.status === 200 && res.data.status === 1){
                     this.message = res.data.result;
-                    console.log(this.message);
+                    //console.log(this.message);
                     this.inspect();
                 }
                 else{
@@ -66,10 +69,9 @@ export default {
                 console.log(error);
             })
             
-            // console.log(this.name);
         },
         handleChange(){
-            alert('1111');
+            this.$router.push('/change/'+this.name);
         },
         setTip(message,type){
             this.tip.message = message;
@@ -84,17 +86,21 @@ export default {
                 this.tip.timer = null;
         },
         inspect(){
-            for(let k in this.message){
-                if(this.message[k] === null){
-                    this.setTip('请您尽快完善基本信息!','warning');
-                    this.clearTimer();
-                    return;
+            if(this.message.email === this.Login.email){
+                for(let k in this.message){
+                    if(this.message[k] === null){
+                        this.setTip('请您尽快完善基本信息!','warning');
+                        this.clearTimer();
+                        return;
+                    }
                 }
             }
+            
         }
     },
     mounted() {
         this.getMessage();
+        
     }
 }
 </script>

@@ -32,6 +32,13 @@ const routers = [
             title:'个人信息'
         },
         component:(resolve) => require(['./components/common/person.vue'],resolve)
+    },
+    {
+        path:'/change/:name',
+        meta:{
+            title:'修改资料'
+        },
+        component:(resolve) => require(['./components/common/change.vue'],resolve)
     }
 ]
 export default routers;
