@@ -27,14 +27,14 @@ const routers = [
         component :(resolve) => require(['./components/index.vue'],resolve)
     },
     {
-        path:'/person/:name',
+        path:'/person/:email',
         meta:{
             title:'个人信息'
         },
         component:(resolve) => require(['./components/common/person.vue'],resolve)
     },
     {
-        path:'/change/:name',
+        path:'/change/:email',
         meta:{
             title:'修改资料'
         },

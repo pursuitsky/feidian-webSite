@@ -14,7 +14,7 @@ Vue.use(VueRouter);
 Vue.prototype.$qs = qs;
 //路由的配置
 const RouterConfig ={
-    mode:'history',
+    //mode:'history',
     routes: Routers
 };
 const router = new VueRouter(RouterConfig);
@@ -32,7 +32,7 @@ router.afterEach((to,from,next) => {
 const store = new Vuex.Store({
     state:{
         allMessage:[],
-        LoginMess:JSON.parse(window.localStorage.getItem('form'))
+        LoginMess:JSON.parse(localStorage.getItem('form'))
     },
     getters:{
        
@@ -41,16 +41,16 @@ const store = new Vuex.Store({
         setAllMess (state,arr){
             state.allMessage = arr;
         },
-        // setLoginMess (state,obj){
-        //     state.LoginMess = JSON.parse(window.localStorage.getItem('form'));
-        // }
+        setLoginMess (state){
+            state.LoginMess = JSON.parse(localStorage.getItem('form'))
+        }
     },
     actions:{
         getAllMessage (context){
             $.ajax.post('/all').then((res) => {
                 if(res.status === 200)
                     context.commit('setAllMess',res.data.result);
-                    //console.log(res);
+                    console.log(res);
             })
             .catch((error) => {
                 console.log(error);

@@ -2,7 +2,7 @@
     <div class="person" >
         <div class="personMess">
             <div class="main-info">
-                <img src="../../images/qq.png"/>
+                <img :src="message.avatar"/>
                 <p>{{message.name}}</p>
                 <p>{{message.email}}</p>
                 <span @click="handleChange" v-if="message.email === Login.email">修改资料</span>
@@ -34,7 +34,7 @@ import Alert from './alert.vue'
 export default {
     data(){
         return{
-            name:this.$route.params.name,
+            email:this.$route.params.email,
             message:{},
             tip:{
                 type:'success',
@@ -55,7 +55,7 @@ export default {
     },
     methods:{
         getMessage() {
-            $.ajax.get('/byname?name='+this.name).then((res) => {
+            $.ajax.get('/byemail?email='+this.email).then((res) => {
                 if(res.status === 200 && res.data.status === 1){
                     this.message = res.data.result;
                     //console.log(this.message);
@@ -71,7 +71,7 @@ export default {
             
         },
         handleChange(){
-            this.$router.push('/change/'+this.name);
+            this.$router.push('/change/'+this.email);
         },
         setTip(message,type){
             this.tip.message = message;
@@ -100,7 +100,7 @@ export default {
     },
     mounted() {
         this.getMessage();
-        
+        //console.log(this.Login);
     }
 }
 </script>

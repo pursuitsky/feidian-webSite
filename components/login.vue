@@ -73,7 +73,9 @@ export default {
                 this.errorPassWord = false;
                 $.ajax.post('/login',this.$qs.stringify(this.form)).then((res) => {
                     if(res.status === 200 && res.data.status === 1){
-                        window.localStorage.setItem('form',JSON.stringify(this.form));
+                        localStorage.setItem('form',JSON.stringify(this.form));
+                        this.$store.commit('setLoginMess');
+                        //console.log(JSON.parse(localStorage.getItem('form')));
                         this.$router.push({path:'/index',query:{email:this.email}});
                     }else{
                         //alert(res.data.error);

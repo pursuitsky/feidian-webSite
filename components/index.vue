@@ -53,6 +53,7 @@ export default {
             ],
             searchCode:'',
             current:1,
+            email:this.$route.query.email
         }
     },
     components:{
@@ -91,9 +92,8 @@ export default {
             this.current = val;
         },
         personalCenter(){
-            alert('去个人中心');
             //console.log(this.LoginMessage);
-            //this.$router.push('/person/'+this.LoginMessage.email);
+            this.$router.push('/person/'+this.LoginMessage.email);
         } 
     },
     watch:{
@@ -103,6 +103,7 @@ export default {
     },
     mounted(){
         this.$store.dispatch('getAllMessage');
+        console.log(this.LoginMessage);
     }
 }
 </script>

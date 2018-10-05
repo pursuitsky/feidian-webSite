@@ -52,7 +52,6 @@ var config = {
         ]
     },
     plugins:[
-
         //提取后的css文件
         new ExtractTextPlugin({
             filename:'[name].css',

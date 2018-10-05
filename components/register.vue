@@ -92,7 +92,7 @@ export default {
                 password:'',
                 confirmPass:'',
                 name:'',
-                group:'大前端'
+                group:'大前端',
             },
             error:{
                 email:false,

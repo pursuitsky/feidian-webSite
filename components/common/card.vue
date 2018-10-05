@@ -24,8 +24,8 @@ export default {
     },
     methods:{
         goPerson() {
-            let name = this.data.name;
-            this.$router.push('/person/'+name);
+            let email = this.data.email;
+            this.$router.push('/person/'+email);
         }
     }
 }
