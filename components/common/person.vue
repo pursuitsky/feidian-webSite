@@ -16,7 +16,7 @@
                 <p>大学：{{message.college}}</p>
                 <p>户籍所在地：{{message.homeTown}}</p>
                 <p>工作地点：{{message.company}}</p>
-                <p>加入时间：{{message.inTime}}</p>
+                <p>加入时间：{{message.inTime | time}}</p>
                 <p>电话：{{message.phone}}</p>
                 <p>QQ：{{message.qq}}</p>
                 <p>微信：{{message.weChat}}</p>
@@ -46,6 +46,14 @@ export default {
     },
     components:{
         Alert
+    },
+    filters:{
+        time(value) {
+            var date = new Date(value);
+            var month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+            var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+            return date.getFullYear() + '-' + month + "-" + day;
+        }
     },
     computed:{
         Login:function(){

@@ -1,12 +1,14 @@
 <template>
     <div class="change">
         <h1>修改资料</h1>
-        <tabs v-model="activeKey">
+        <div class="avatar">
+            <img :src="message.avatar">
+            <input type="file" @change="saveFile($event)" accept="image/*"  enctype="multipart/form-data">
+            <a @click="updateAvatar">修改头像</a>
+        </div>
+        <div class="allMessae">
+            <tabs v-model="activeKey">
             <pane label="基本信息" name="0">
-                <div>
-                    <span>头像：</span>
-                    <img :src="message.avatar" style="width:50px;">
-                </div>
                 <div>
                     <span>姓名</span>
                     <input type="text" v-model="message.name"/>
@@ -89,6 +91,9 @@
                 </div>
             </pane>
         </tabs>
+        </div>
+        <a @click="save" class="save">保存</a>
+        <!-- <button @click="aaa">点击上传</button> -->
     </div>
 </template>
 
@@ -101,7 +106,8 @@ export default {
         return{
             email:this.$route.params.email,
             message:{},
-            activeKey:'0'
+            activeKey:'0',
+            avatar:{}
         }
     },
     components:{
@@ -122,6 +128,37 @@ export default {
             .catch((error) => {
                 console.log(error);
             })
+        },
+        saveFile(e){
+            this.avatar = e.target.files[0];
+            //console.log(this.avatar);
+        },
+        updateAvatar(){
+            var formData = new FormData();
+            formData.append('file',this.avatar);
+            //console.log(this.avatar);
+            $.ajax.post('/upload/avatar',formData,{
+                headers:{'Content-Type':'multipart/form-data'}
+            }).then((res) => {
+                if(res.status === 200)
+                    //返回服务器上的图片路径
+                    console.log(res);
+                    this.message.avatar = res.data.result;
+            })
+            .catch((error)=>{
+                console.log(error);
+            });
+        },
+        save(){
+            $.ajax.post('/change',this.message).then((res) => {
+                if(res.status === 200)
+                alert('修改成功!');
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+            alert('保存');
+            //console.log(this.message.avatar);
         }
     },
     mounted() {
@@ -132,7 +169,8 @@ export default {
 
 <style scoped>
     .change{
-        width: 50%;
+        position: relative;
+        width: 45%;
         margin: 50px auto;
     }
     .change h1{
@@ -141,7 +179,37 @@ export default {
         margin-bottom: 20px;
         font-weight: 100;
     }
-    .change p{
+    .change .avatar{
+        float: left;
+        width: 35%;
+        height: 400px;
+        border-right: 1px solid rgb(155, 155, 155) ;
+        text-align: center;
+    }
+    .change .avatar img{
+        display: block;
+        margin: 20px auto;
+        width: 100px;
+        border-radius: 50%;
+    }
+    .avatar a{
         display: inline-block;
+        margin-top: 20px;
+    }
+    .avatar a,.save{
+        color: #ffffff;
+        border-radius: 4px;
+        cursor: pointer;
+        padding: 5px 14px;
+        background: #2d8cf0;
+    }
+    .allMessae{
+        float: left;
+        margin-left: 30px;
+    }
+    .save{
+        position: absolute;
+        bottom: 5px;
+        right: 0;  
     }
 </style>
