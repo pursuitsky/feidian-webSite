@@ -11,7 +11,7 @@
                 <h1>{{message.group}}</h1>
                 <p>昵称：{{message.nickname}}</p>
                 <p>性别：{{message.sex}}</p>
-                <p>生日：{{message.birthday}}</p>
+                <p>生日：{{message.birthday | time}}</p>
                 <p>年级：{{message.grade}}</p>
                 <p>大学：{{message.college}}</p>
                 <p>户籍所在地：{{message.homeTown}}</p>

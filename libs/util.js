@@ -5,7 +5,7 @@ const Util = {
     }
 Util.ajax = axios.create({
     baseURL: Util.apiPath,
-    
+    headers:{'Content-Type':'application/x-www-form-urlencoded'}
 });
 Util.getLastDate = function(time) {
     var date = new Date(time);

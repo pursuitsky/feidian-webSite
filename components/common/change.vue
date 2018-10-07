@@ -79,7 +79,7 @@
                 </div>
                 <div>
                     <span>微信:</span>
-                    <input type="text" v-model="message.wechat">
+                    <input type="text" v-model="message.weChat">
                 </div>
                 <div>
                     <span>电话:</span>
@@ -114,12 +114,21 @@ export default {
         tabs,
         pane
     },
+    filters:{
+        time(value) {
+            var date = new Date(value);
+            var month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+            var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+            return date.getFullYear() + '-' + month + "-" + day;
+        }
+    },
     methods:{
+        
         getMessage(){
             $.ajax.get('/byemail?email='+this.email).then((res) => {
                 if(res.status === 200 && res.data.status === 1){
                     this.message = res.data.result;
-                    //console.log(this.message);
+                    this.transformTime();
                 }
                 else{
                     alert(res.data.error);
@@ -129,9 +138,12 @@ export default {
                 console.log(error);
             })
         },
+        transformTime(){
+            this.message.inTime = $.getLastDate(this.message.inTime);
+            this.message.birthday = $.getLastDate(this.message.birthday);
+        },
         saveFile(e){
             this.avatar = e.target.files[0];
-            //console.log(this.avatar);
         },
         updateAvatar(){
             var formData = new FormData();
@@ -150,14 +162,14 @@ export default {
             });
         },
         save(){
-            $.ajax.post('/change',this.message).then((res) => {
+            $.ajax.post('/change',this.$qs.stringify(this.message)).then((res) => {
                 if(res.status === 200)
                 alert('修改成功!');
             })
             .catch((error) => {
                 console.log(error);
             });
-            alert('保存');
+            console.log(this.message);
             //console.log(this.message.avatar);
         }
     },
