@@ -20,6 +20,7 @@
                 <p>电话：{{message.phone}}</p>
                 <p>QQ：{{message.qq}}</p>
                 <p>微信：{{message.weChat}}</p>
+                <p>管理员:{{message.admin}}</p>
             </div>
         </div>
         <Alert :closed="tip.closed" :type="tip.type">

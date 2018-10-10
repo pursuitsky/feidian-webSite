@@ -28,7 +28,7 @@
                 <h4>成员档案</h4>
                 <div class="person-message-content">
                     <div v-for="data in pageData" :key="data.id">
-                        <Card :data="data"></Card>
+                        <Card :data="data" :is-admin="LoginMessage.admin"></Card>
                     </div>
                 </div>
                 <Page :total-data="filterData" :current="current" @handleCurrent="changeCurrent"></Page>
@@ -92,7 +92,7 @@ export default {
             this.current = val;
         },
         personalCenter(){
-            //console.log(this.LoginMessage);
+            console.log(this.LoginMessage);
             this.$router.push('/person/'+this.LoginMessage.email);
         } 
     },
@@ -103,7 +103,7 @@ export default {
     },
     mounted(){
         this.$store.dispatch('getAllMessage');
-        console.log(this.LoginMessage);
+        //console.log(this.LoginMessage);
     }
 }
 </script>

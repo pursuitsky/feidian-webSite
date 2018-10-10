@@ -63,6 +63,18 @@
                     </transition>
                 </div>
                 <div>
+                    <input 
+                        type="text" 
+                        class="form-input"
+                        :class="{error:error.id}"
+                        placeholder="学号"
+                        v-model="registerForm.id"
+                        @blur="handleError('id')"/>
+                    <transition name="display">
+                        <i v-show="error.id"><span class="icon">!</span>学号不能为空</i>
+                    </transition>
+                </div>
+                <div>
                     <select name="select" class="select" v-model="registerForm.group">
                         <option value="大前端">大前端</option>
                         <option value="安卓">安卓</option>
@@ -92,12 +104,14 @@ export default {
                 password:'',
                 confirmPass:'',
                 name:'',
+                id:'',
                 group:'大前端',
             },
             error:{
                 email:false,
                 password:false,
                 name:false,
+                id:false,
                 group:false
             },
             tip:{
@@ -211,6 +225,7 @@ export default {
         float: right;
         padding: 30px 120px 0px 0px;
         width: 40%;
+        overflow: scroll;
     }
     .register-message h3,.register-message h1{
         padding: 10px 0 0 10px;
@@ -255,6 +270,7 @@ export default {
         display: inline-block;
         padding: 10px 36%;
         margin-top: 20px;
+        margin-bottom: 50px;
         cursor: pointer;
         border-radius: 4px;
         font-size: 22px;

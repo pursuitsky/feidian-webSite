@@ -38,7 +38,7 @@
                 </div>
                 <div>
                     <span>学号</span>
-                    <input type="text" v-model="message.studentID" disabled>
+                    <input type="text" v-model="message.id" disabled>
                 </div>
                 <div>
                     <span>组别</span>

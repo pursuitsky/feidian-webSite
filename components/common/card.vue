@@ -12,6 +12,9 @@
             <span>组别:</span>
             <span>{{data.group}}</span>
         </div>
+        <div  v-if="isAdmin" @click.stop="handleRemove">
+            <span>删除</span>
+        </div>
     </div>
 </template>
 
@@ -20,12 +23,20 @@ export default {
     props:{
         data:{
             type:Object
+        },
+        isAdmin:{
+            type:Boolean,
+            default:false
         }
     },
     methods:{
         goPerson() {
             let email = this.data.email;
             this.$router.push('/person/'+email);
+        },
+        handleRemove() {
+            //alert('点击删除');
+            this.$store.dispatch('removeMess',this.data.email);
         }
     }
 }
