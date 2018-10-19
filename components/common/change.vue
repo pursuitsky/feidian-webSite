@@ -3,9 +3,12 @@
         <h1>修改资料</h1>
         <div class="avatar">
             <img :src="message.avatar">
-            <input type="file" @change="saveFile($event)" accept="image/*"  enctype="multipart/form-data">
-            <a @click="updateAvatar">修改头像</a>
+            <a @click="showModel = true">修改头像</a>
         </div>
+        <Model v-if="showModel" @close="showModel = false" @confirm="updateAvatar">
+            <span slot="header">上传头像</span>
+            <input type="file" @change="saveFile($event)" accept="image/*"  enctype="multipart/form-data" slot="body">
+        </Model>
         <div class="allMessae">
             <tabs v-model="activeKey">
             <pane label="基本信息" name="0">
@@ -101,18 +104,21 @@
 import $ from '../../libs/util.js'
 import tabs from '../UI/tabs/tabs.vue'
 import pane from '../UI/tabs/pane.vue'
+import Model from '../UI/model.vue'
 export default {
     data(){
         return{
             email:this.$route.params.email,
             message:{},
             activeKey:'0',
-            avatar:{}
+            avatar:'',
+            showModel:false
         }
     },
     components:{
         tabs,
-        pane
+        pane,
+        Model
     },
     filters:{
         time(value) {
@@ -146,20 +152,26 @@ export default {
             this.avatar = e.target.files[0];
         },
         updateAvatar(){
-            var formData = new FormData();
-            formData.append('file',this.avatar);
-            //console.log(this.avatar);
-            $.ajax.post('/upload/avatar',formData,{
-                headers:{'Content-Type':'multipart/form-data'}
-            }).then((res) => {
-                if(res.status === 200)
-                    //返回服务器上的图片路径
-                    console.log(res);
-                    this.message.avatar = res.data.result;
-            })
-            .catch((error)=>{
-                console.log(error);
-            });
+            if(this.avatar === '')
+                alert('请选择图片');
+            else{
+                this.showModel = false;
+                var formData = new FormData();
+                formData.append('file',this.avatar);
+                //console.log(this.avatar);
+                $.ajax.post('/upload/avatar',formData,{
+                    headers:{'Content-Type':'multipart/form-data'}
+                }).then((res) => {
+                    if(res.status === 200)
+                        //返回服务器上的图片路径
+                        console.log(res);
+                        this.message.avatar = res.data.result;
+                })
+                .catch((error)=>{
+                    console.log(error);
+                });
+            }
+            
         },
         save(){
             $.ajax.post('/change',this.$qs.stringify(this.message)).then((res) => {
