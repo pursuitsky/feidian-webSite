@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
-import axios from 'axios';
 import qs from 'qs'
 import App from './App.vue';
+import Message from './components/UI/message/message.js'
 import './style.css'//全局css属性
 import Routers from './router.js'//路由配置文件
 import $ from './libs/util.js'
@@ -12,6 +12,7 @@ import $ from './libs/util.js'
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.prototype.$qs = qs;
+Vue.prototype.$message = Message;
 //路由的配置
 const RouterConfig ={
     //mode:'history',

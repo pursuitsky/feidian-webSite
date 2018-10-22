@@ -86,9 +86,6 @@
             </div>
             <a href="#" @click="handleReg">立即注册</a>
         </div>
-        <Alert :closed="tip.closed" :type="tip.type">
-            <span>{{tip.message}}</span>
-        </Alert>
         
     </div>
 </template>
@@ -114,17 +111,9 @@ export default {
                 id:false,
                 group:false
             },
-            tip:{
-                type:'success',
-                closed:true,
-                message:'',
-                timer:null
-            },
+            
             height:window.innerHeight+'px',
         }
-    },
-    components:{
-        Alert,
     },
     computed:{
         confirmPassError:function() {
@@ -139,24 +128,21 @@ export default {
         handleReg () {
             if(this.registerForm.email ==='' || this.registerForm.password === '' || this.registerForm.confirmPass === ''|| this.registerForm.name === ''|| this.registerForm.group === ''){
                 //alert('请完善信息!');
-                this.setTip('请完善您的基本信息!','warning');
-                this.clearTimer();
+                this.$message({
+                    type:'warning',
+                    message:'请完善您的基本信息!'
+                })
             }
             else if(this.registerForm.password != this.registerForm.confirmPass){
-                this.setTip('请确认密码是否一致!','warning');
-                this.clearTimer();
+                this.$message.warning('请确认密码是否一致！');
             }
             else{
                 $.ajax.post('/register',this.$qs.stringify(this.registerForm)).then((res) =>{
                     if(res.status === 200  && res.data.status ===1){
-                        //alert('注册成功，请登录！');
-                        this.setTip('注册成功,请登录!','success');
-                        this.clearTimer();
+                        this.$message.success('注册成功,请登录！');
                         //this.$router.push('/login');
                     }else{
-                        //alert(res.data.error);
-                        this.setTip(res.data.error,'error');
-                        this.clearTimer();
+                        this.$message.error(res.data.error);
                     }
                     // console.log(res);
                 })
@@ -172,18 +158,7 @@ export default {
         handleMiss () {
             this.$refs.qq.style.display = 'none';
         },
-        setTip(message,type){
-            this.tip.message = message;
-            this.tip.type = type;
-            this.tip.closed = false;
-            this.tip.timer = setTimeout(() => {
-                 this.tip.closed = true;
-            },4000);
-        },
-        clearTimer() {
-            if(this.tip.timer !==null)
-                this.tip.timer = null;
-        }
+       
     },
         
 }

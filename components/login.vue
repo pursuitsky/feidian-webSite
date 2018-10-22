@@ -27,9 +27,9 @@
             <span>还没有沸点账号？</span>
             <router-link to="/register" >立即注册</router-link>
         </div>
-        <Alert :closed="tip.closed" :type="tip.type">
+        <!-- <Alert :closed="tip.closed" :type="tip.type">
             <span>{{tip.message}}</span>
-        </Alert>
+        </Alert> -->
     </div>
 </template>
 
@@ -44,17 +44,17 @@ export default {
             errorEmail:false,
             errorPassWord:false,
             checked:false,
-            tip:{
-                type:'success',
-                closed:true,
-                message:'',
-                timer:null
-            }
+            // tip:{
+            //     type:'success',
+            //     closed:true,
+            //     message:'',
+            //     timer:null
+            // }
         }
     },
-    components:{
-        Alert
-    },
+    // components:{
+    //     Alert
+    // },
     computed:{
         form:function() {
             return {
@@ -79,8 +79,7 @@ export default {
                         this.$router.push({path:'/index',query:{email:this.email}});
                     }else{
                         //alert(res.data.error);
-                        this.setTip(res.data.error,'error');
-                        this.clearTimer();
+                        this.$message.error(res.data.error);
                     }
                 })
                 .catch((error) => {
@@ -116,18 +115,18 @@ export default {
         clearCookie: function() {
             this.setCookie("", "", -1); //修改2值都为空，天数为负1天就好了
         },
-        setTip(message,type){
-            this.tip.message = message;
-            this.tip.type = type;
-            this.tip.closed = false;
-            this.tip.timer = setTimeout(() => {
-                 this.tip.closed = true;
-            },4000);
-        },
-        clearTimer() {
-            if(this.tip.timer !==null)
-                this.tip.timer = null;
-        }
+        // setTip(message,type){
+        //     this.tip.message = message;
+        //     this.tip.type = type;
+        //     this.tip.closed = false;
+        //     this.tip.timer = setTimeout(() => {
+        //          this.tip.closed = true;
+        //     },4000);
+        // },
+        // clearTimer() {
+        //     if(this.tip.timer !==null)
+        //         this.tip.timer = null;
+        // }
     },
     watch:{
         checked(val){

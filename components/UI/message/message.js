@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-const NoticeConstructor = Vue.extend(require('./message.vue')) // 直接将Vue组件作为Vue.extend的参数
+const NoticeConstructor = Vue.extend(require('./message.vue').default) // 直接将Vue组件作为Vue.extend的参数
 
 let nId = 1
 
