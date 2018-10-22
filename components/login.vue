@@ -19,10 +19,13 @@
         </div>
         <div class="checkbox">
             <input type="checkbox" v-model="checked"/>
-            <span>记住密码  </span>
+            <span>记住密码</span>
         </div>
         
-        <a class="button" @click="handleLogin">登 录</a>
+        <div class="DIVbutton">
+            <a class="button" @click="handleLogin">登 录</a>
+        </div>
+        
         <div class="goToReg">
             <span>还没有沸点账号？</span>
             <router-link to="/register" >立即注册</router-link>
@@ -152,17 +155,16 @@ export default {
         margin-top: 10px;
     }
     .login {
-        width: 280px;
-        height: 380px;
+        width: 450px;
+        height: 600px;
         font-size: 14px;
-        margin: 80px auto;
-        padding-top: 10px;
+        margin: 90px auto;
         text-align: center;
         border-radius: 6px;
         background:#ffffff;
     }
     .login .logo img{
-        width: 60px;
+        width: 180px;
         padding-left: 30px;
     }
     .user-info .login-message{
@@ -170,20 +172,18 @@ export default {
     }
     .login .title{
         font-weight: 600;
-        font-size: 20px;
+        font-size: 40px;
     }
     .login-password,.login-name {
-        width: 200px;
-        height: 32px;
-        padding: 0 10px;
+        width: 350px;
+        height: 50px;
+        padding: 0 18px;
         border: 1px solid #d7dde4;
         border-radius: 4px;
         color: #657180;
         outline: none;
-    }
-    .login-message p{
-        font-size: 12px;
-        margin-top: 0; 
+        font-size: 18px;
+
     }
     input:focus {
         border: 1px solid #3399ff;
@@ -193,9 +193,13 @@ export default {
         color: red; 
     }
     .checkbox{
-        float: left;
-        margin-left: 25px;
+        width: 400px;
+        /* height: 40px; */
+        display: inline-block;
+        text-align: left;
         color: #17233d;
+        font-size: 16px;
+        margin-top: 20px;
     }
     .button {
         display: inline-block;
@@ -203,17 +207,17 @@ export default {
         border-radius: 4px;
         color: #fff;
         background: #2d8cf0;
-        margin: 15px 0;
-        padding: 8px 95px;
+        padding: 12px 110px;
     }
     .button:hover{
         background:#5cadff;
     }
     .goToReg {
+        margin-top: 35px;
         padding-right: 30px;
         text-align: right;
         color: #9ea7b4;
-        font-size: 12px;
+        font-size: 18px;
     }
     .goToReg a:hover{
         color: #027efad8;

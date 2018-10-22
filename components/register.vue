@@ -1,16 +1,18 @@
 <template>
     <div class="register">
         <div class="register-img">
-            <img src="../images/bg.jpg" />
+            <img src="../images/2.jpg" />
         </div>
-        <div class="registerNav">
-            <a href="http://www.52feidian.com"><img src="../images/logo.png"/>沸点官网</a>
-            <img src="../images/qq.png" class="qq" ref="qq"/>
-            <span @mouseover="handleDisplay" @mouseout="handleMiss"><img src="../images/qq.png"/>沸点交流群</span>
-            <a href="http://wiki.52feidian.com">wiki账户</a>
-            <span><router-link to="/login">登录</router-link></span>
-        </div>
+        
         <div class="register-message">
+            <div class="registerNav">
+                <a href="http://www.52feidian.com"><img src="../images/logo.png"/>沸点官网</a>
+                <img src="../images/qq.png" class="qq" ref="qq"/>
+                <span @mouseover="handleDisplay" @mouseout="handleMiss"><img src="../images/qq.png"/>沸点交流群</span>
+                <a href="http://wiki.52feidian.com">wiki账户</a>
+                <span><router-link to="/login">登录</router-link></span>
+            </div>
+
             <h1>欢迎加入沸点</h1>
             <h3>每一天,都要进步!</h3>
             <div class="form">
@@ -190,32 +192,46 @@ export default {
 </script>
 
 <style scoped>
-    .register-img img{
-        width: 40%; 
-        height: 678px;
-        display: block;
-        float: left;   
+    .register {
+        height: 100%;
     }
-    .registerNav {
+    .register-img {
+        width: 40%;
+        display: inline-block;
+        height: 100%;
+    }
+    .register-img img{
+        width: 100%; 
+        height: 100%;
+        /* height: 678px; */
+        /* display: block;
+        float: left;    */
+    }
+
+    .register-message {
+        width: 60%;
+    }
+    
+    .register-message .registerNav {
         float: right;
         margin-top: 25px;
     }
-    .registerNav span,.registerNav a{
+    .register-message .registerNav span,.registerNav a{
         font-size:17px; 
         font-weight:100px; 
         padding-right: 25px;
         color: rgb(116, 107, 107);
         cursor: pointer;
     }
-    .registerNav span:hover,.registerNav a:hover{
+    .register-message .registerNav span:hover,.registerNav a:hover{
         color: black;
     }
-    .registerNav img {
+    .register-message .registerNav img {
         vertical-align: middle;
         width: 20px;
         padding-right: 5px;
     }
-    .registerNav .qq{
+    .register-message .registerNav .qq{
         position: absolute;
         top:60px;
         width: 150px;
