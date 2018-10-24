@@ -1,6 +1,6 @@
 <template>
   <transition name="message-fade">
-    <div v-if="visible" :class="wrapClasses">
+    <div v-if="visible" :class="wrapClasses" id="message">
         <img class="message_img" :src="typeImg"/>
         <span class="">
           {{message}}
@@ -56,7 +56,7 @@
     .message-fade-enter-active, .message-fade-leave-active {
         transition: all .3s ease;
     }
-    .message-fade-enter, .message-fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    .message-fade-enter, .message-fade-leave-to {
         transform: translateY(-20px);
         opacity: 0;
     }

@@ -92,7 +92,6 @@
 
 <script>
 import $ from '../libs/util.js'
-import Alert from './common/alert.vue'
 export default {
     data() {
         return{
@@ -115,6 +114,7 @@ export default {
             height:window.innerHeight+'px',
         }
     },
+
     computed:{
         confirmPassError:function() {
             return this.registerForm.password != this.registerForm.confirmPass;

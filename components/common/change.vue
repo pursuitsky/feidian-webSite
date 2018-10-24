@@ -152,8 +152,10 @@ export default {
             this.avatar = e.target.files[0];
         },
         updateAvatar(){
-            if(this.avatar === '')
-                alert('请选择图片');
+            if(this.avatar === ''){
+                this.showModel = false;
+                this.$message.warning('请选择图片文件!');
+            }   
             else{
                 this.showModel = false;
                 var formData = new FormData();
@@ -176,7 +178,7 @@ export default {
         save(){
             $.ajax.post('/change',this.$qs.stringify(this.message)).then((res) => {
                 if(res.status === 200)
-                alert('修改成功!');
+                this.$message.success('修改成功!');
             })
             .catch((error) => {
                 console.log(error);
